@@ -4,7 +4,6 @@
 <section class="jumbotron text-center">
     <div class="container">
         <h3 class="jumbotron-heading">Harry carts - tienda online</h3>
-        <!-- <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p> -->
         <p>
             <a href="{{ route('home') }}" class="btn btn-primary my-2">Seguir comprando</a>
         </p>
@@ -12,64 +11,66 @@
 </section>
 <div class="container">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <h1>
                 Carrito de compras
             </h1>
         </div>
-        <table class="col-md-12 table">
-            <thead>
+        <div class="col-md-12 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Acciones</th>
+                        <th class="text-center">Libro</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Valor unitario</th>
+                        <th class="text-center">Valor total</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                @php
+                    $totalPrice = 0;
+                @endphp
+                @forelse ($carts as $cart)
                 <tr>
-                    <th class="text-center">Acciones</th>
-                    <th class="text-center">Libro</th>
-                    <th class="text-center">Cantidad</th>
-                    <th class="text-center">Valor unitario</th>
-                    <th class="text-center">Valor total</th>
-                    <th class="text-center">Agregar</th>
+                    <td>
+                        <form method="POST" action="{{ route('remove-item', $cart->id) }}">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                    <td>{{ $cart->bookName }}</td>
+                    <td>{{ $cart->inCart }}</td>
+                    <td>{{ number_format($cart->bookPrice, 2) }}</td>
+                    <td>{{ number_format($cart->bookPrice*$cart->inCart, 2) }}</td>
+                    <td class="text-center">
+                        @if ($cart->bookStock > 1)
+                        <form method="POST" action="{{ route('update-cart', $cart->id) }}">
+                            {{ method_field('PUT') }}
+                            {{ csrf_field() }}
+                            <input type="number" name="quant" id="quant" value="1" max="{{ $cart->bookStock - $cart->inCart }}">
+                            <input type="submit" value="Agregar al carrito">
+                        </form>
+                        @endif
+                    </td>
                 </tr>
-            </thead>
-            @php
-                $totalPrice = 0;
-            @endphp
-            @forelse ($carts as $cart)
-            <tr>
-                <td>
-                    <form method="POST" action="{{ route('remove-item', $cart->id) }}">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        <input type="submit" value="Eliminar">
-                    </form>
-                </td>
-                <td>{{ $cart->bookName }}</td>
-                <td>{{ $cart->inCart }}</td>
-                <td>{{ number_format($cart->bookPrice, 2) }}</td>
-                <td>{{ number_format($cart->bookPrice*$cart->inCart, 2) }}</td>
-                <td class="text-center">
-                    @if ($cart->bookStock > 1)
-                    <form method="POST" action="{{ route('update-cart', $cart->id) }}">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
-                        <input type="number" name="quant" id="quant" value="1" max="{{ $cart->bookStock }}">
-                        <input type="submit" value="Agregar">
-                    </form>
-                    @endif
-                </td>
-            </tr>
-            @php
-                $totalPrice = $totalPrice + ($cart->bookPrice*$cart->inCart);
-            @endphp
-            @empty
-            <tr>
-                <td>
-                    No se han agregado nada al carrito
-                </td>
-            </tr>
-            @endforelse
-            <tr>
-                <td class="padding">Valor total de la compra</td>
-                <td colspan="5" class="text-right">{{ number_format($totalPrice, 2) }}</td>
-            </tr>
-        </table>
+                @php
+                    $totalPrice = $totalPrice + ($cart->bookPrice*$cart->inCart);
+                @endphp
+                @empty
+                <tr>
+                    <td>
+                        No se han agregado nada al carrito
+                    </td>
+                </tr>
+                @endforelse
+                <tr>
+                    <td class="padding">Valor total de la compra</td>
+                    <td colspan="5" class="text-right">{{ number_format($totalPrice, 2) }}</td>
+                </tr>
+            </table>
+        </div>
         @if($totalPrice > 0)
         <div class="col-xs-6 text-left">
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#cancel">

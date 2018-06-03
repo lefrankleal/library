@@ -37,9 +37,8 @@
                                 <form method="POST" action="{{ route('add-to-cart', $book->id) }}">
                                     {{ csrf_field() }}
                                     <div class="form-group">
-                                        <label for="quant">Agregar al carrito</label>
-                                        <input type="number" name="quant" id="quant" value="1" max="{{ $book->stock }}">
-                                        <input type="submit" value="Agregar">
+                                        <input type="number" name="quant" id="quant" value="1" min="1" max="{{ $book->stock }}">
+                                        <input type="submit" value="Agregar al carrito">
                                     </div>
                                 </form>
                             </p>

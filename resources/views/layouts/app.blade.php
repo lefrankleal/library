@@ -16,14 +16,14 @@
 </head>
 <body>
     <header class="nav navbar">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-right">
             <li>
-                <a href="#" class="navbar-brand d-flex align-items-center">
+                <a href="/" class="navbar-brand d-flex align-items-center">
                     <strong>{{ config('app.name') }}</strong>
                 </a>
             </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-right">
             <li>
                 <a href="{{ route('logout') }}" class=" d-flex align-items-center" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar sesion
