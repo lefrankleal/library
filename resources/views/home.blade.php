@@ -26,7 +26,7 @@
                 <div class="col-md-8 d-inline-block">
                     <div class="card-body">
                         <p class="card-text">{{ $book->name }}</p>
-                        @if ($book->quant < 1)
+                        @if ($book->stock < 1)
                             <p class="card-text">Cantidad disponible {{ $book->stock }}</p>
                         @else
                             <p class="card-text">Agotado</p>

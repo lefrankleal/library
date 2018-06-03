@@ -49,7 +49,7 @@
                         <form method="POST" action="{{ route('update-cart', $cart->id) }}">
                             {{ method_field('PUT') }}
                             {{ csrf_field() }}
-                            <input type="number" name="quant" id="quant" value="1" max="{{ $cart->bookStock - $cart->inCart }}">
+                            <input type="number" name="quant" id="quant" value="1" min="1" max="{{ $cart->bookStock - $cart->inCart }}">
                             <input type="submit" value="Agregar al carrito">
                         </form>
                         @endif
