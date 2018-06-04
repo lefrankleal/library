@@ -7,6 +7,8 @@ use App\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Validator;
 
 class CartController extends Controller
 {
@@ -24,6 +26,25 @@ class CartController extends Controller
 
     public function add(Request $request, Book $book)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'quant' => 'required|numeric|min:1|max:' . $book->stock,
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect('home')
+                ->withErrors(
+                    [
+                        'quant' => [
+                            'required' => 'La cantidad es requerida',
+                            'between ' => ' La cantidad debe estar entre 1 y ' . $book->stock . '.',
+                        ],
+                    ]
+                )
+                ->withInput();
+        }
+
         $user_id = Auth::user()->id;
         $cart = new Cart();
         $cart->user_id = $user_id;
@@ -35,6 +56,26 @@ class CartController extends Controller
 
     public function update(Request $request, Cart $cart)
     {
+        $book = Book::find($cart->book->id);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'quant' => 'required|numeric|min:1|max:' . $book->stock,
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect('cart')
+                ->withErrors(
+                    [
+                        'quant' => [
+                            'required' => 'La cantidad es requerida',
+                            'between ' => ' La cantidad debe estar entre 1 y ' . $book->stock . '.',
+                        ],
+                    ]
+                )
+                ->withInput();
+        }
+
         $cart->quant = $request->quant + $cart->quant;
         $cart->save();
         return redirect('cart');

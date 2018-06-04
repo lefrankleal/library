@@ -16,6 +16,17 @@
                 Carrito de compras
             </h1>
         </div>
+        @if ($errors->any())
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
         <div class="col-md-12 table-responsive">
             <table class="table">
                 <thead>
