@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Harry books Library
+                    Library Harry Books
                 </div>
             </div>
         </div>

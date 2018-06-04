@@ -15,7 +15,7 @@ class BooksTableSeeder extends Seeder
             [
                 'name' => 'Harry Potter y la Piedra Filosofal',
                 'image' => '1-piedra-filosofal.jpeg',
-                'stock' => '20',
+                'stock' => '0',
                 'price' => '2000',
             ]
         );
@@ -23,7 +23,7 @@ class BooksTableSeeder extends Seeder
             [
                 'name' => 'Harry Potter y la Camara Secreta',
                 'image' => '2-camara-secreta.jpeg',
-                'stock' => '20',
+                'stock' => '2',
                 'price' => '2000',
             ]
         );
