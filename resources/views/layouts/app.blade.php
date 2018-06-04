@@ -15,32 +15,32 @@
     <link href="{{ asset('css/'.Request::path().'.css') }}" rel="stylesheet">
 </head>
 <body>
-    <header class="nav navbar">
-        <ul class="nav navbar-right">
-            <li>
-                <a href="/" class="navbar-brand d-flex align-items-center">
-                    <strong>{{ config('app.name') }}</strong>
-                </a>
-            </li>
-        </ul>
-        <ul class="nav navbar-right">
-            <li>
-                <a href="{{ route('logout') }}" class=" d-flex align-items-center" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Cerrar sesion
-                </a>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/" class="navbar-brand d-flex align-items-center">
+                        <strong>{{ config('app.name') }}</strong>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" class=" d-flex align-items-center" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Cerrar sesion
+                    </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-                </form>
-            </li>
-        </ul>
-    </header>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <main role="main">
+    <div role="container">
 
     @yield('content')
 
-    </main>
+    </div>
 
     <footer class="text-muted">
         <div class="container">
