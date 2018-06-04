@@ -71,7 +71,7 @@
                 </tr>
             </table>
         </div>
-        @if($totalPrice > 0)
+        @if($totalPrice != 0)
         <div class="col-xs-6 text-left">
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#cancel">
                 Cancelar compra

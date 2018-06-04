@@ -37,12 +37,10 @@ class CartController extends Controller
 
     public function add(Request $request, Book $book)
     {
-        $user = Auth::user();
-        $user_id = $user->id;
-        $book_id = $book->id;
+        $user_id = Auth::user()->id;
         $cart = new Cart();
         $cart->user_id = $user_id;
-        $cart->book_id = $book_id;
+        $cart->book_id = $book->id;
         $cart->quant = $request->quant;
         $cart->save();
         return redirect('home');
