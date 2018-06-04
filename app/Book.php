@@ -10,7 +10,7 @@ class Book extends Model
         'name', 'image', 'stock', 'price',
     ];
 
-    public function carts()
+    public function cart()
     {
         return $this->hasMany('App\Cart');
     }

@@ -40,24 +40,24 @@
                             <input type="submit" value="Eliminar">
                         </form>
                     </td>
-                    <td>{{ $cart->bookName }}</td>
-                    <td>{{ $cart->inCart }}</td>
-                    <td>{{ number_format($cart->bookPrice, 2) }}</td>
-                    <td>{{ number_format($cart->bookPrice*$cart->inCart, 2) }}</td>
+                    <td>{{ $cart->book->name }}</td>
+                    <td>{{ $cart->quant }}</td>
+                    <td>{{ number_format($cart->book->price, 2) }}</td>
+                    <td>{{ number_format($cart->book->price*$cart->quant, 2) }}</td>
                     <td class="text-center">
-                        @if ($cart->bookStock > 1)
+                        @if ($cart->book->stock > 1)
                         <form method="POST" action="{{ route('update-cart', $cart->id) }}">
                             {{ method_field('PUT') }}
                             {{ csrf_field() }}
-                            <input type="number" name="quant" id="quant" value="1" min="1" max="{{ $cart->bookStock - $cart->inCart }}">
+                            <input type="number" name="quant" id="quant" value="1" min="1" max="{{ $cart->book->stock - $cart->quant }}">
                             <input type="submit" value="Agregar al carrito">
                         </form>
                         @endif
                     </td>
+                    @php
+                        $totalPrice = $totalPrice + ($cart->book->price*$cart->quant);
+                    @endphp
                 </tr>
-                @php
-                    $totalPrice = $totalPrice + ($cart->bookPrice*$cart->inCart);
-                @endphp
                 @empty
                 <tr>
                     <td>

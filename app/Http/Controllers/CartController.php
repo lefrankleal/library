@@ -17,20 +17,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::leftJoin('users', 'carts.user_id', '=', 'users.id')
-            ->leftJoin('books', 'carts.book_id', '=', 'books.id')
-            ->where('user_id', '=', Auth::user()->id)
-            ->select(
-                'carts.id as id',
-                'carts.quant as inCart',
-                'users.id as userId',
-                'users.name as userName',
-                'books.id as bookId',
-                'books.name as bookName',
-                'books.image as bookImage',
-                'books.price as bookPrice',
-                'books.stock as bookStock'
-            )
+        $carts = Cart::with('user', 'book')
             ->get();
         return view('cart', compact('carts'));
     }
